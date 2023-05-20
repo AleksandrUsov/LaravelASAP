@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-    <form method="post" action="">
+    <form method="post" action="{{ route('admin.post.store') }}">
+        @csrf
         <div>
             <label class="block font-medium text-sm text-gray-700" for="email">
                 Email

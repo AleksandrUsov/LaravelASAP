@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -30,6 +32,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $post = Post::query()->create([
+            'title' => 'Статья №1',
+            'content' => 'Содержимое статьи',
+            'user_id' => 1
+        ]);
+
+        dd($post);
         //Запись инфмаорции в БД
     }
 
@@ -44,9 +53,9 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $var)
     {
-        //
+        dd($var);
     }
 
     /**

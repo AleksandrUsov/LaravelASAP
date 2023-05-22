@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+
+
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index')->middleware('auth');
 
 /** Административная панель | Посты блога */
 Route::name('admin.post.')->prefix('/admin/post')->group(function () {
 
-    Route::get('/index', [PostController::class, 'index'])->name('index');
+    Route::get('/', [PostController::class, 'index'])->name('index');
     Route::get('/create', [PostController::class, 'create'])->name('create');
     Route::get('/edit/{id}', [PostController::class, 'edit'])->name('edit');
 

@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->text('content')->comment('Содержимое поста');
             $table->foreignIdFor(\App\Models\User::class)->comment('Автор поста');
             $table->boolean('is_visible')->default(true);
-            $table->dateTime('published_at')->nullable(true);
+            $table->dateTime('published_at')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,9 +14,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = Post::all();
+        $posts = Post::all();
+
         return view('post.index', [
-            'posts' => $post
+            'posts' => $posts
         ]);
     }
 
@@ -55,7 +57,9 @@ class PostController extends Controller
      */
     public function edit(Request $request, string $var)
     {
-        dd($var);
+        return view('admin.post.edit', [
+            'post' => Post::find($var),
+        ]);
     }
 
     /**
@@ -63,7 +67,15 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        $post = Post::query()->findOrFail($id);
+
+        $post->update($validated);
+        return redirect()->back()->with(['success' => true]);
     }
 
     /**

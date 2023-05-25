@@ -1,6 +1,10 @@
 @extends('admin.layouts.layout')
 @section('content')
-    <h2 class="text-3xl text-gray-500">Статьи</h2>
+    <div class="flex items-center justify-between text-green-500 font-bold content-around">
+        <h2 class="text-3xl text-gray-500">Статьи</h2>
+        <a href="{{ route('admin.posts.create') }}">Создать статью</a>
+    </div>
+
     <div class="flex content-around">
         @foreach($posts as $post)
             <div class="m-3 w-full sm:max-w-md mt-6 px-6 py-4 bg-gray-100 shadow-md overflow-hidden">

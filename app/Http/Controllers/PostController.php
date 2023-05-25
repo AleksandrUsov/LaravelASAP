@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class PostController extends Controller
     {
         $posts = Post::all();
 
-        return view('post.index', [
+        return view('admin.post.index', [
             'posts' => $posts
         ]);
     }
@@ -26,56 +27,37 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        return view('admin.post.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $post = Post::query()->create([
-            'title' => 'Статья №1',
-            'content' => 'Содержимое статьи',
-            'user_id' => 1
-        ]);
-
-        dd($post);
-        //Запись инфмаорции в БД
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        $data = $request->all();
+        $post = Post::query()->create($data);
+        return redirect()->route('admin.posts.index')->with(['success' => true, 'message' => 'Статья с ID ' . $post->id . ' записана в БД']);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, string $var)
+    public function edit(Post $post)
     {
         return view('admin.post.edit', [
-            'post' => Post::find($var),
+            'post' => $post,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostRequest $request, Post $post)
     {
-        $validated = $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-        ]);
-
-        $post = Post::query()->findOrFail($id);
-
-        $post->update($validated);
-        return redirect()->back()->with(['success' => true]);
+        $data = $request->all();
+        $post->update($data);
+        return redirect()->route('admin.posts.index')->with(['success' => true]);
     }
 
     /**

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Models\Category;
 use App\Models\Post;
-use Dflydev\DotAccessData\Data;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
+
 
 class PostController extends Controller
 {
@@ -27,7 +27,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.post.create');
+        $categories = Category::all();
+        $users = User::all();
+        return view('admin.post.create', ['categories' => $categories, 'users' => $users]);
     }
 
     /**
@@ -37,7 +39,7 @@ class PostController extends Controller
     {
         $data = $request->all();
         $post = Post::query()->create($data);
-        return redirect()->route('admin.posts.index')->with(['success' => true, 'message' => 'Статья с ID ' . $post->id . ' записана в БД']);
+        return redirect()->route('admin.posts.index')->with('message', 'Статья с ID ' . $post->id . ' записана в БД');
     }
 
     /**
@@ -45,8 +47,12 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $categories = Category::all();
+        $users = User::all();
         return view('admin.post.edit', [
             'post' => $post,
+            'users' => $users,
+            'categories' => $categories
         ]);
     }
 
@@ -57,14 +63,15 @@ class PostController extends Controller
     {
         $data = $request->all();
         $post->update($data);
-        return redirect()->route('admin.posts.index')->with(['success' => true]);
+        return redirect()->route('admin.posts.index')->with('message', 'Пост обновлён');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->back()->with('message', 'Пост удалён');
     }
 }

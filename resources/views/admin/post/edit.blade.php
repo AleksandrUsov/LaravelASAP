@@ -29,13 +29,35 @@
             </div>
             <div>
                 <label class="block font-medium text-sm text-gray-700" for="email">
-                    ID Автора
+                    Автор
                 </label>
-                <input
-                    disabled
-                    value="{{ old('user_id', $post->user_id) }}"
-                    class="bg-gray-300 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="name" type="text" name="user_id" required="required" autofocus="autofocus">
+                <select
+                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
+                    id="name"
+                    name="user_id"
+                    type="text"
+                    required="required"
+                    autofocus="autofocus">
+                    @foreach($users as $user)
+                        <option @selected(old('user_id', $post->user_id) == $user->id) value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label class="block font-medium text-sm text-gray-700" for="category">
+                    Категория
+                </label>
+                <select
+                    id="category"
+                    name="category_id"
+                    required="required"
+                    autofocus="autofocus"
+                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1
+                    w-full">
+                    @foreach($categories as $category)
+                        <option @selected(old('category_id', $post->category_id) == $category->id) value="{{ $category->id }}">{{ $category->title }}</option>
+                    @endforeach
+                </select>
             </div>
             <div>
                 <label class="block font-medium text-sm text-gray-700" for="published_at">

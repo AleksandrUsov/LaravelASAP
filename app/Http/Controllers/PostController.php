@@ -37,6 +37,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+
         $data = $request->all();
         $post = Post::query()->create($data);
         return redirect()->route('admin.posts.index')->with('message', 'Статья с ID ' . $post->id . ' записана в БД');
@@ -73,5 +74,11 @@ class PostController extends Controller
     {
         $post->delete();
         return redirect()->back()->with('message', 'Пост удалён');
+    }
+
+    public function drop()
+    {
+        Post::query()->delete();
+        return redirect()->back()->with('message', 'все посты удалены');
     }
 }

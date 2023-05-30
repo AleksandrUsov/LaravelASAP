@@ -6,7 +6,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index')->middleware('auth');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
     /** Административная панель | Посты блога */
     Route::name('admin.posts.')->prefix('/admin/posts')->group(function () {
@@ -17,6 +17,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
         Route::post('/store', [PostController::class, 'store'])->name('store');
         Route::put('/update/{post}', [PostController::class, 'update'])->name('update');
+        Route::delete('/drop', [PostController::class, 'drop'])->name('drop');
     });
 
     Route::name('admin.categories.')->prefix('/admin/categories')->group(function () {

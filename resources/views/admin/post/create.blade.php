@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="w-full max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         @foreach($errors->all() as $error)
             <span class="text-red-300">{{ $error }} </span>
         @endforeach

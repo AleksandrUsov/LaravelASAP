@@ -6,9 +6,9 @@
         @foreach($errors->all() as $error)
             <span class="text-red-300">{{ $error }} </span>
         @endforeach
-        <form class="" method="post" action="{{ route('admin.posts.store') }}">
+        <form class="mx-auto" method="post" action="{{ route('admin.posts.store') }}">
             @csrf
-            <div>
+            <div class="mt-5">
                 <label class="block font-medium text-sm text-gray-700" for="title">
                     Title
                 </label>
@@ -17,7 +17,7 @@
                     id="title" type="text" name="title" autofocus="autofocus">
 
             </div>
-            <div>
+            <div class="mt-5">
                 <label class="block font-medium text-sm text-gray-700" for="content">
                     Content
                 </label>
@@ -41,7 +41,7 @@
                     @endforeach
                 </select>
             </div>
-            <div>
+            <div class="mt-5">
                 <label class="block font-medium text-sm text-gray-700" for="category">
                     Категория
                 </label>
@@ -57,7 +57,7 @@
                     @endforeach
                 </select>
             </div>
-            <div>
+            <div class="mt-5">
                 <label class="block font-medium text-sm text-gray-700" for="published_at">
                     Дата публикации
                 </label>
@@ -65,8 +65,7 @@
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
                     id="published_at" type="date" name="published_at" required="required" autofocus="autofocus">
             </div>
-
-            <div>
+            <div class="mt-5">
                 <label class="block font-medium text-sm text-gray-700" for="visible">
                     Отображать?
                 </label>

@@ -17,7 +17,7 @@ class PostRequest extends FormRequest
             'title' => ['string', 'max:50'],
             'content' => ['string'],
             'user_id' => ['exists:users,id', 'int'],
-            'category_id' => ['exists:categories,id', 'int'],
+            'category_id' => ['nullable', 'int'],
             'is_visible' => ['bool'],
             'published_at' => ['date', 'nullable'],
         ];

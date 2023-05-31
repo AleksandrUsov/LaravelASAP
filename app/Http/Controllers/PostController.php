@@ -6,6 +6,7 @@ use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 
 class PostController extends Controller
@@ -13,12 +14,23 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::all();
+        if ($categoryId = $request->get('category_id')) {
+            $posts = $posts->where('category_id', $categoryId);
+        }
+        if ($user_id = $request->get('user_id')) {
+            $posts = $posts->where('user_id', $user_id);
+        }
+
+        $categories = Category::all();
+        $users = User::all();
 
         return view('admin.post.index', [
-            'posts' => $posts
+            'posts' => $posts,
+            'categories' => $categories,
+            'users' => $users
         ]);
     }
 
@@ -80,5 +92,17 @@ class PostController extends Controller
     {
         Post::query()->delete();
         return redirect()->back()->with('message', 'все посты удалены');
+    }
+
+    public function trashcan()
+    {
+        $data = Post::onlyTrashed()->get();
+        return view('admin.post.trashcan', ['posts' => $data]);
+    }
+
+    public function restore(int $id)
+    {
+        Post::withTrashed()->firstWhere('id', $id)->restore();
+        return redirect()->back()->with('message', 'Пост восстановлен');
     }
 }

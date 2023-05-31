@@ -21,8 +21,8 @@
     <!-- Page Content -->
     <main class="flex">
         @include('admin.components.menu')
-        <div class="py-12 w-9/12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="py-12 w-full">
+            <div class="mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-5">
                     @yield('content')
                 </div>

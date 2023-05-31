@@ -17,7 +17,10 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
         Route::post('/store', [PostController::class, 'store'])->name('store');
         Route::put('/update/{post}', [PostController::class, 'update'])->name('update');
+
         Route::delete('/drop', [PostController::class, 'drop'])->name('drop');
+        Route::get('/trashcan', [PostController::class, 'trashcan'])->name('trashcan');
+        Route::put('/restore/{id}', [PostController::class, 'restore'])->name('restore');
     });
 
     Route::name('admin.categories.')->prefix('/admin/categories')->group(function () {

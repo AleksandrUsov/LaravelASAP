@@ -8,6 +8,7 @@
             @csrf
             <input type="text"
                    name="title"
+                   autofocus
                    placeholder="Категория"
                    value="{{old('title', '')}}"
                    id="title"

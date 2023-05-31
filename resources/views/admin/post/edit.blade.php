@@ -9,37 +9,43 @@
             @csrf
             @method('PUT')
             <div>
-                <label class="block font-medium text-sm text-gray-700" for="email">
+                <label class="block font-medium text-sm text-gray-700" for="title">
                     Title
                 </label>
                 <input
                     value="{{ old('title', $post->title) }}"
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="name" type="text" name="title" autofocus="autofocus">
-
+                    id="title"
+                    type="text"
+                    name="title"
+                    autofocus="autofocus">
             </div>
             <div>
-                <label class="block font-medium text-sm text-gray-700" for="email">
+                <label class="block font-medium text-sm text-gray-700" for="content">
                     Content
                 </label>
                 <input
                     value="{{ old('content', $post->content) }}"
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="name" type="text" name="content"  autofocus="autofocus">
+                    id="content"
+                    type="text"
+                    name="content"
+                    autofocus="autofocus">
             </div>
             <div>
-                <label class="block font-medium text-sm text-gray-700" for="email">
+                <label class="block font-medium text-sm text-gray-700" for="author">
                     Автор
                 </label>
                 <select
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="name"
+                    id="author"
                     name="user_id"
                     type="text"
                     required="required"
                     autofocus="autofocus">
                     @foreach($users as $user)
-                        <option @selected(old('user_id', $post->user_id) == $user->id) value="{{ $user->id }}">{{ $user->name }}</option>
+                        <option
+                            @selected(old('user_id', $post->user_id) == $user->id) value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -55,7 +61,8 @@
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1
                     w-full">
                     @foreach($categories as $category)
-                        <option @selected(old('category_id', $post->category_id) == $category->id) value="{{ $category->id }}">{{ $category->title }}</option>
+                        <option
+                            @selected(old('category_id', $post->category_id) == $category->id) value="{{ $category->id }}">{{ $category->title }}</option>
                     @endforeach
                 </select>
             </div>
@@ -66,7 +73,11 @@
                 <input
                     value="{{ old('published_at', $post->published_at) }}"
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="published_at" type="text" name="published_at" required="required" autofocus="autofocus">
+                    id="published_at"
+                    type="text"
+                    name="published_at"
+                    required="required"
+                    autofocus="autofocus">
             </div>
 
             <div>
@@ -75,12 +86,15 @@
                 </label>
                 <input
                     hidden
-                    value="0" name="is_visible" >
+                    value="0" name="is_visible">
                 <input
                     @checked(old('is_visible', $post->is_visible))
                     value="1"
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1"
-                    id="published_at" type="checkbox" name="is_visible"  autofocus="autofocus">
+                    id="published_at"
+                    type="checkbox"
+                    name="is_visible"
+                    autofocus="autofocus">
             </div>
 
             <button type="submit">Сохранить</button>

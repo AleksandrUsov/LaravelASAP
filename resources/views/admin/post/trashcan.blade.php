@@ -15,10 +15,11 @@
                 <p>{{ $post->content }}</p>
                 <p>{{ $post->category?->title }}</p>
                 <span>Дата публикации: {{ $post->published_at }}</span>
-                <span>Дата удаления: {{ $post->deleted_at }}</span>
-                <form action="{{ route('admin.posts.restore-post', $post) }}" method="get">
+                <span>Дата удаления: {{ $post->deleted_at }}</span><br>
+                <form action="{{ route('admin.posts.restore', $post) }}" method="post">
                     @csrf
-                    <button class="text-green-500 hover:text-indigo-700 hover:border-b border-red-700">
+                    @method('PUT')
+                    <button type="submit" class="text-green-500 hover:text-indigo-700 hover:border-b border-red-700">
                         Восстановить
                     </button>
                 </form>

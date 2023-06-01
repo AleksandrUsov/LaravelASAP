@@ -6,6 +6,7 @@ use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 
@@ -100,9 +101,15 @@ class PostController extends Controller
         return view('admin.post.trashcan', ['posts' => $data]);
     }
 
-    public function restore(int $id)
+    public function restore(int $id): RedirectResponse
     {
         Post::withTrashed()->firstWhere('id', $id)->restore();
         return redirect()->back()->with('message', 'Пост восстановлен');
+    }
+
+    public function restoreAll()
+    {
+        Post::onlyTrashed()->restore();
+        return redirect()->back()->with('message', 'Все посты восстановлены');
     }
 }

@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/drop', [PostController::class, 'drop'])->name('drop');
         Route::get('/trashcan', [PostController::class, 'trashcan'])->name('trashcan');
         Route::put('/restore/{id}', [PostController::class, 'restore'])->name('restore');
+        Route::get('/restore-all', [PostController::class, 'restoreAll'])->name('restore-all');
     });
 
     Route::name('admin.categories.')->prefix('/admin/categories')->group(function () {

@@ -10,7 +10,7 @@ Route::middleware(['auth'])->group(function () {
 
     /** Административная панель | Посты блога */
     Route::middleware('auth')->name('admin.posts.')->prefix('/admin/posts')->group(function () {
-        Route::get('/', [PostController::class, 'index'])->name('index');
+        Route::get('/', [PostController::class, 'index'])->name('index')->middleware('test');
         Route::get('/create', [PostController::class, 'create'])->name('create');
         Route::get('/edit/{post}', [PostController::class, 'edit'])->name('edit');
 

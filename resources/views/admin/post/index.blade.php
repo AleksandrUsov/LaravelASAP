@@ -59,6 +59,7 @@
         @empty
             <h3>статей нет</h3>
         @endforelse
+        {{ $posts->withQueryString()->links() }}
     </div>
 
 @endsection

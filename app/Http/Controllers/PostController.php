@@ -21,7 +21,7 @@ class PostController extends Controller
     {
         $data = $request->validated();
         $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
-        $posts = Post::filter($filter)->get();
+        $posts = Post::filter($filter)->paginate(10);
 
         $categories = Category::all();
         $users = User::all();

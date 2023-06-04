@@ -5,12 +5,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
     /** Административная панель | Посты блога */
-    Route::middleware('auth')->name('admin.posts.')->prefix('/admin/posts')->group(function () {
-        Route::get('/', [PostController::class, 'index'])->name('index')->middleware('test');
+    Route::name('admin.posts.')->prefix('/admin/posts')->group(function () {
+        Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
         Route::get('/edit/{post}', [PostController::class, 'edit'])->name('edit');
 
@@ -24,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/restore-all', [PostController::class, 'restoreAll'])->name('restore-all');
     });
 
-    Route::middleware('auth')->name('admin.categories.')->prefix('/admin/categories')->group(function () {
+    Route::name('admin.categories.')->prefix('/admin/categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
         Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('edit');

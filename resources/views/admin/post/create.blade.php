@@ -6,15 +6,22 @@
         @foreach($errors->all() as $error)
             <span class="text-red-300">{{ $error }} </span>
         @endforeach
-        <form class="mx-auto" method="post" action="{{ route('admin.posts.store') }}">
+        <form class="mx-auto"
+              method="post"
+              action="{{ route('admin.posts.store') }}">
             @csrf
             <div class="mt-5">
-                <label class="block font-medium text-sm text-gray-700" for="title">
+                <label
+                    class="block font-medium text-sm text-gray-700"
+                    for="title">
                     Title
                 </label>
                 <input
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="title" type="text" name="title" autofocus="autofocus">
+                    id="title"
+                    type="text"
+                    name="title"
+                    autofocus="autofocus">
 
             </div>
             <div class="mt-5">
@@ -23,10 +30,14 @@
                 </label>
                 <textarea
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="content" type="text" name="content" autofocus="autofocus"></textarea>
+                    id="content"
+                    type="text"
+                    name="content"
+                    autofocus="autofocus"></textarea>
             </div>
             <div>
-                <label class="block font-medium text-sm text-gray-700" for="email">
+                <label class="block font-medium text-sm text-gray-700"
+                       for="email">
                     Автор
                 </label>
                 <select

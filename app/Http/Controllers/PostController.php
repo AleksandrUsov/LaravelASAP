@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\PostFilter;
+use App\Http\Requests\FilterRequest;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 
 class PostController extends Controller
@@ -15,15 +17,11 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(FilterRequest $request): View
     {
-        $posts = Post::all();
-        if ($categoryId = $request->get('category_id')) {
-            $posts = $posts->where('category_id', $categoryId);
-        }
-        if ($user_id = $request->get('user_id')) {
-            $posts = $posts->where('user_id', $user_id);
-        }
+        $data = $request->validated();
+        $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
+        $posts = Post::filter($filter)->get();
 
         $categories = Category::all();
         $users = User::all();
@@ -38,7 +36,7 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         $categories = Category::all();
         $users = User::all();
@@ -48,9 +46,8 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request): RedirectResponse
     {
-
         $data = $request->all();
         $post = Post::query()->create($data);
         return redirect()->route('admin.posts.index')->with('message', 'Статья с ID ' . $post->id . ' записана в БД');
@@ -59,7 +56,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Post $post): View
     {
         $categories = Category::all();
         $users = User::all();
@@ -73,7 +70,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(PostRequest $request, Post $post): RedirectResponse
     {
         $data = $request->all();
         $post->update($data);
@@ -83,19 +80,19 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post): RedirectResponse
     {
         $post->delete();
         return redirect()->back()->with('message', 'Пост удалён');
     }
 
-    public function drop()
+    public function drop(): RedirectResponse
     {
         Post::query()->delete();
         return redirect()->back()->with('message', 'все посты удалены');
     }
 
-    public function trashcan()
+    public function trashcan(): View
     {
         $data = Post::onlyTrashed()->get();
         return view('admin.post.trashcan', ['posts' => $data]);
@@ -107,7 +104,7 @@ class PostController extends Controller
         return redirect()->back()->with('message', 'Пост восстановлен');
     }
 
-    public function restoreAll()
+    public function restoreAll(): RedirectResponse
     {
         Post::onlyTrashed()->restore();
         return redirect()->back()->with('message', 'Все посты восстановлены');

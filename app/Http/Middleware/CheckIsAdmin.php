@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\RoleEnum;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class CheckIsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::user()->is_admin) {
+        if (Auth::user()->role->role_name != RoleEnum::ADMIN->value) {
             return redirect('/dashboard');
         }
         return $next($request);

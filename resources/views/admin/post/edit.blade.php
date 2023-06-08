@@ -5,7 +5,9 @@
         @foreach($errors->all() as $error)
             <span class="text-red-300">{{ $error }} </span>
         @endforeach
-        <form method="post" action="{{ route('admin.posts.update', $post) }}">
+        <form method="post"
+              action="{{ route('admin.posts.update', $post) }}"
+              enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div>
@@ -79,7 +81,17 @@
                     required="required"
                     autofocus="autofocus">
             </div>
-
+            <div class="flex">
+                @forelse($images as $image)
+                    <img src="{{asset('storage/images/' . $image->hash_name)}}"
+                    style="height: 200px; width: 200px">
+                @empty
+                    <p>Нет изображений</p>
+                @endforelse
+            </div>
+            <div class="mt-5">
+                <input name="files[]" multiple type="file" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm block mt-1 w-full">
+            </div>
             <div>
                 <label class="block font-medium text-sm text-gray-700" for="email">
                     Отображать?

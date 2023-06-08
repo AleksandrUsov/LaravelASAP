@@ -21,9 +21,10 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::delete('/drop', [PostController::class, 'drop'])->name('drop');
         Route::get('/trashcan', [PostController::class, 'trashcan'])->name('trashcan');
         Route::put('/restore/{id}', [PostController::class, 'restore'])->name('restore');
-        Route::get('/restore-all', [PostController::class, 'restoreAll'])->name('restore-all');
+        Route::put('/restore-all', [PostController::class, 'restoreAll'])->name('restore-all');
     });
 
+    /** Административная панель | Категории блога */
     Route::name('admin.categories.')->prefix('/admin/categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');

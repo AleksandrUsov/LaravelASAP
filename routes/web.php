@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    dd(\App\Models\Post::query()->orderBy('id', 'desc')->limit(10)->get());
     return view('welcome');
 });
 

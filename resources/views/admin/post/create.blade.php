@@ -8,7 +8,8 @@
         @endforeach
         <form class="mx-auto"
               method="post"
-              action="{{ route('admin.posts.store') }}">
+              action="{{ route('admin.posts.store') }}"
+              enctype="multipart/form-data">
             @csrf
             <div class="mt-5">
                 <label
@@ -18,6 +19,7 @@
                 </label>
                 <input
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
+                    value="{{ old('title', '') }}"
                     id="title"
                     type="text"
                     name="title"
@@ -33,22 +35,22 @@
                     id="content"
                     type="text"
                     name="content"
-                    autofocus="autofocus"></textarea>
+                    autofocus="autofocus">{{ old('content', '') }}</textarea>
             </div>
             <div>
                 <label class="block font-medium text-sm text-gray-700"
-                       for="email">
+                       for="user_id">
                     Автор
                 </label>
                 <select
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="name"
+                    id="user_id"
                     name="user_id"
                     type="text"
                     required="required"
                     autofocus="autofocus">
                     @foreach($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        <option @selected(old('user_id') == $user->id) value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -64,7 +66,7 @@
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1
                     w-full">
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                        <option  @selected(old('category_id') == $category->id) value="{{ $category->id }}">{{ $category->title }}</option>
                     @endforeach
                 </select>
             </div>
@@ -74,7 +76,14 @@
                 </label>
                 <input
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="published_at" type="date" name="published_at" required="required" autofocus="autofocus">
+                    id="published_at"
+                    type="date"
+                    name="published_at"
+                    required="required"
+                    autofocus="autofocus">
+            </div>
+            <div class="mt-5">
+                <input name="files[]" multiple type="file" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm block mt-1 w-full">
             </div>
             <div class="mt-5">
                 <label class="block font-medium text-sm text-gray-700" for="visible">

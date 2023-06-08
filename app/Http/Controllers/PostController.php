@@ -6,8 +6,10 @@ use App\Http\Filters\PostFilter;
 use App\Http\Requests\FilterRequest;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Post;
 use App\Models\User;
+use App\Services\FileUploadService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -21,7 +23,7 @@ class PostController extends Controller
     {
         $data = $request->validated();
         $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
-        $posts = Post::filter($filter)->paginate(10);
+        $posts = Post::filter($filter)->orderByDesc('id')->paginate(10);
 
         $categories = Category::all();
         $users = User::all();
@@ -46,11 +48,14 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostRequest $request): RedirectResponse
+    public function store(PostRequest $request, FileUploadService $fileUploadService): RedirectResponse
     {
-        $data = $request->all();
+        $data = $request->validated();
         $post = Post::query()->create($data);
-        return redirect()->route('admin.posts.index')->with('message', 'Статья с ID ' . $post->id . ' записана в БД');
+        $uploadingFiles = collect($request->file('files'));
+        $fileUploadService->upload($uploadingFiles, $post);
+
+        return redirect()->route('admin.posts.index')->with('message', 'Статья записана в БД');
     }
 
     /**
@@ -60,28 +65,34 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $users = User::all();
+        $images = $post->images;
         return view('admin.post.edit', [
             'post' => $post,
             'users' => $users,
-            'categories' => $categories
+            'categories' => $categories,
+            'images' => $images,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PostRequest $request, Post $post): RedirectResponse
+    public function update(PostRequest $request, Post $post, FileUploadService $fileUploadService): RedirectResponse
     {
-        $data = $request->all();
+        $data = $request->validated();
+        $uploadingFiles = collect($request->file('files'));
+        $fileUploadService->upload($uploadingFiles, $post);
         $post->update($data);
+
         return redirect()->route('admin.posts.index')->with('message', 'Пост обновлён');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post): RedirectResponse
+    public function destroy(Post $post, FileUploadService $fileUploadService): RedirectResponse
     {
+        $fileUploadService->delete(collect($post->images));
         $post->delete();
         return redirect()->back()->with('message', 'Пост удалён');
     }

@@ -20,6 +20,7 @@ class PostRequest extends FormRequest
             'category_id' => ['nullable', 'int'],
             'is_visible' => ['bool'],
             'published_at' => ['date', 'nullable'],
+            'image' => ['nullable', 'mimes:jpg,jpeg,bmp,png', 'max:2048'],
         ];
     }
 }

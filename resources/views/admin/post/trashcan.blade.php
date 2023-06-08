@@ -2,8 +2,11 @@
 @section('content')
     <div class="flex justify-between">
         <h2 class="flex justify-start text-3xl text-gray-500">Удалённые статьи</h2>
-        <a href="{{ route('admin.posts.restore-all') }}"
-           class="justify-end text-2xl text-green-500 font-bold">Восстановить всё</a>
+        <form action="{{ route('admin.posts.restore-all') }}" method="post">
+            @csrf
+            @method('put')
+            <button class="justify-end text-2xl text-green-500 font-bold">Восстановить всё</button>
+        </form>
     </div>
     @if (session('message'))
         <p class="text-green-500">

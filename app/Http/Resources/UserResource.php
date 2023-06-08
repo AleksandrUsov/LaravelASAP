@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'created_at' => $this->created_at,
-            'posts' => PostResource::collection($this->posts),
+            'role' => new RoleResource($this->role)
         ];
     }
 }

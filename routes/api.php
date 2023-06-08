@@ -24,31 +24,41 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('/users')->group( function () {
-    Route::get('/user/{id}', function ($id) {
-        return new UserResource(User::query()->find($id));
-    });
-
-    Route::get('/all', function () {
-        return UserResource::collection(User::all()->keyBy->id);
-    });
-
-    Route::get('/collection', function () {
-        return new UserCollection(User::all());
-    });
+Route::name('api.posts.')->prefix('/posts')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Api\PostController::class, 'index'])->name('index');
+    Route::get('/post/{post}', [\App\Http\Controllers\Api\PostController::class, 'show'])->name('show');
 });
 
-Route::prefix('/posts')->group(function () {
-    Route::get('/post/{id}', function ($id) {
-        return new PostResource(Post::query()->find($id));
-    });
-
-    Route::get('/all', function () {
-        return PostResource::collection(Post::all());
-    });
-
-    Route::get('/collection', function () {
-        return new PostCollection(Post::all());
-    });
+Route::name('api.users.')->prefix('/users')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Api\UserController::class, 'index'])->name('index');
+    Route::get('/users/{user}', [\App\Http\Controllers\Api\UserController::class, 'show'])->name('show');
 });
 
+//Route::prefix('/users')->group( function () {
+//    Route::get('/user/{id}', function ($id) {
+//        return new UserResource(User::query()->find($id));
+//    });
+//
+//    Route::get('/all', function () {
+//        return UserResource::collection(User::all()->keyBy->id);
+//    });
+//
+//    Route::get('/collection', function () {
+//        return new UserCollection(User::all());
+//    });
+//});
+//
+//Route::prefix('/posts')->group(function () {
+//    Route::get('/post/{id}', function ($id) {
+//        return new PostResource(Post::query()->find($id));
+//    });
+//
+//    Route::get('', function () {
+//        return PostResource::collection(Post::all());
+//    });
+//
+//    Route::get('/collection', function () {
+//        return new PostCollection(Post::all());
+//    });
+//});
+//

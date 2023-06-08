@@ -4,16 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\ErrorEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Http\Resources\CategoryResource;
+use App\Models\Category;
 use Illuminate\Support\Facades\Log;
 
-class UserController extends Controller
+class CategoryController extends Controller
 {
     public function index()
     {
         try {
-            return UserResource::collection(User::all());
+            return CategoryResource::collection(Category::all());
         } catch (\Exception $exception) {
             Log::critical($exception->getMessage());
             return response([
@@ -23,10 +23,10 @@ class UserController extends Controller
         }
     }
 
-    public function show(User $user)
+    public function show(Category $category)
     {
         try {
-            return new UserResource($user);
+            return new CategoryResource($category);
         } catch (\Exception $exception) {
             Log::critical($exception->getMessage());
             return response([
@@ -35,5 +35,4 @@ class UserController extends Controller
             ]);
         }
     }
-
 }

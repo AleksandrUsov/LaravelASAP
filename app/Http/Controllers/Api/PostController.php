@@ -2,19 +2,38 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\ErrorEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
     public function index()
     {
-        return PostResource::collection(Post::all());
+        try {
+            return PostResource::collection(Post::query()->paginate(10));
+        } catch (\Exception $exception) {
+            Log::critical($exception->getMessage());
+            return response([
+                'success' => false,
+                'message' => ErrorEnum::UNKNOWN->value
+            ]);
+        }
+
     }
 
-    public function show(int $id)
+    public function show(Post $post)
     {
-        return new PostResource(Post::query()->find($id));
+        try {
+            return new PostResource($post);
+        } catch (\Exception $exception) {
+            Log::critical($exception->getMessage());
+            return \response([
+                'success' => false,
+                'message' => ErrorEnum::UNKNOWN->value
+            ]);
+        }
     }
 }

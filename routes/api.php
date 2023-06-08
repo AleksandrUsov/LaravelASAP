@@ -34,31 +34,8 @@ Route::name('api.users.')->prefix('/users')->group(function () {
     Route::get('/users/{user}', [\App\Http\Controllers\Api\UserController::class, 'show'])->name('show');
 });
 
-//Route::prefix('/users')->group( function () {
-//    Route::get('/user/{id}', function ($id) {
-//        return new UserResource(User::query()->find($id));
-//    });
-//
-//    Route::get('/all', function () {
-//        return UserResource::collection(User::all()->keyBy->id);
-//    });
-//
-//    Route::get('/collection', function () {
-//        return new UserCollection(User::all());
-//    });
-//});
-//
-//Route::prefix('/posts')->group(function () {
-//    Route::get('/post/{id}', function ($id) {
-//        return new PostResource(Post::query()->find($id));
-//    });
-//
-//    Route::get('', function () {
-//        return PostResource::collection(Post::all());
-//    });
-//
-//    Route::get('/collection', function () {
-//        return new PostCollection(Post::all());
-//    });
-//});
-//
+Route::name('api.categories.')->prefix('/categories')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Api\CategoryController::class, 'index'])->name('index');
+    Route::get('/category/{category}', [\App\Http\Controllers\Api\CategoryController::class, 'show'])->name('show');
+});
+

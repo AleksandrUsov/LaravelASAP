@@ -30,12 +30,12 @@
                 <label class="block font-medium text-sm text-gray-700" for="content">
                     Content
                 </label>
-                <textarea
-                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="content"
-                    type="text"
-                    name="content"
-                    autofocus="autofocus">{{ old('content', '') }}</textarea>
+                {{--                <textarea--}}
+                {{--                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"--}}
+                {{--                    id="content"--}}
+                {{--                    type="text"--}}
+                {{--                    name="content"--}}
+                {{--                    autofocus="autofocus">{{ old('content', '') }}</textarea>--}}
             </div>
             <div>
                 <label class="block font-medium text-sm text-gray-700"
@@ -50,7 +50,8 @@
                     required="required"
                     autofocus="autofocus">
                     @foreach($users as $user)
-                        <option @selected(old('user_id') == $user->id) value="{{ $user->id }}">{{ $user->name }}</option>
+                        <option
+                            @selected(old('user_id') == $user->id) value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -66,7 +67,8 @@
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1
                     w-full">
                     @foreach($categories as $category)
-                        <option  @selected(old('category_id') == $category->id) value="{{ $category->id }}">{{ $category->title }}</option>
+                        <option
+                            @selected(old('category_id') == $category->id) value="{{ $category->id }}">{{ $category->title }}</option>
                     @endforeach
                 </select>
             </div>
@@ -83,7 +85,8 @@
                     autofocus="autofocus">
             </div>
             <div class="mt-5">
-                <input name="files[]" multiple type="file" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm block mt-1 w-full">
+                <input name="files[]" multiple type="file"
+                       class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm block mt-1 w-full">
             </div>
             <div class="mt-5">
                 <label class="block font-medium text-sm text-gray-700" for="visible">

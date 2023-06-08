@@ -24,8 +24,8 @@ class IndexPageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'posts' => PostResource::collection(Post::paginate(5, pageName: 'postPage')),
-            'categories' => CategoryResource::collection(Category::paginate(5, pageName: 'categoryPage')),
+            'posts' => PostResource::collection(Post::query()->paginate(5, pageName: 'postPage')),
+            'categories' => CategoryResource::collection(Category::query()->paginate(5, pageName: 'categoryPage')),
         ];
     }
 }

@@ -7,7 +7,7 @@ use App\Http\Resources\Pages\IndexPageResource;
 
 class IndexPageController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): IndexPageResource
     {
         return new IndexPageResource();
     }

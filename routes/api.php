@@ -1,11 +1,6 @@
 <?php
 
-use App\Http\Resources\PostCollection;
-use App\Http\Resources\PostResource;
-use App\Http\Resources\UserCollection;
-use App\Http\Resources\UserResource;
-use App\Models\Post;
-use App\Models\User;
+use App\Http\Controllers\Api\Pages\IndexPageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +33,9 @@ Route::name('api.categories.')->prefix('/categories')->group(function () {
     Route::get('/', [\App\Http\Controllers\Api\CategoryController::class, 'index'])->name('index');
     Route::get('/category/{category}', [\App\Http\Controllers\Api\CategoryController::class, 'show'])->name('show');
 });
+
+Route::name('api.pages.')->prefix('/pages')->group(function () {
+    Route::get('/index', IndexPageController::class)->name('index');
+});
+
 

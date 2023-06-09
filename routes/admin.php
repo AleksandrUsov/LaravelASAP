@@ -12,27 +12,27 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::name('admin.posts.')->prefix('/admin/posts')->group(function () {
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
-        Route::get('/edit/{post}', [PostController::class, 'edit'])->name('edit');
+        Route::get('/{post}/edit', [PostController::class, 'edit'])->name('edit');
 
-        Route::delete('/destroy/{post}', [PostController::class, 'destroy'])->name('destroy');
+        Route::delete('/{post}/destroy', [PostController::class, 'destroy'])->name('destroy');
         Route::post('/store', [PostController::class, 'store'])->name('store');
-        Route::put('/update/{post}', [PostController::class, 'update'])->name('update');
+        Route::put('/{post}/update', [PostController::class, 'update'])->name('update');
 
         Route::delete('/drop', [PostController::class, 'drop'])->name('drop');
         Route::get('/trashcan', [PostController::class, 'trashcan'])->name('trashcan');
-        Route::put('/restore/{id}', [PostController::class, 'restore'])->name('restore');
-        Route::put('/restore-all', [PostController::class, 'restoreAll'])->name('restore-all');
+        Route::put('/{id}/restore', [PostController::class, 'restore'])->name('restore');
+        Route::put('/restore', [PostController::class, 'restoreAll'])->name('restore-all');
     });
 
     /** Административная панель | Категории блога */
     Route::name('admin.categories.')->prefix('/admin/categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
-        Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('edit');
+        Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit');
 
-        Route::delete('/destroy/{category}', [CategoryController::class, 'destroy'])->name('destroy');
+        Route::delete('/{category}/destroy', [CategoryController::class, 'destroy'])->name('destroy');
         Route::post('/store', [CategoryController::class, 'store'])->name('store');
-        Route::put('/update/{category}', [CategoryController::class, 'update'])->name('update');
+        Route::put('/{category}/update', [CategoryController::class, 'update'])->name('update');
     });
 });
 

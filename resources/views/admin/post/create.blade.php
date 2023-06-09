@@ -6,74 +6,67 @@
         @foreach($errors->all() as $error)
             <span class="text-red-300">{{ $error }} </span>
         @endforeach
-        <form class="mx-auto"
-              method="post"
-              action="{{ route('admin.posts.store') }}"
-              enctype="multipart/form-data">
-            @csrf
-            <div class="mt-5">
-                <label
-                    class="block font-medium text-sm text-gray-700"
-                    for="title">
-                    Title
-                </label>
-                <input
-                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
+
+        <x-post.form
+            method="post"
+            action="{{ route('admin.posts.store') }}"
+            enctype="multipart/form-data"
+        >
+            <x-post.form.item>
+                <x-post.form.input
                     value="{{ old('title', '') }}"
-                    id="title"
                     type="text"
                     name="title"
-                    autofocus="autofocus">
+                >
+                    Title
+                </x-post.form.input>
+            </x-post.form.item>
 
-            </div>
-            <div class="mt-5">
-                <label class="block font-medium text-sm text-gray-700" for="content">
-                    Content
-                </label>
-                {{--                <textarea--}}
-                {{--                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"--}}
-                {{--                    id="content"--}}
-                {{--                    type="text"--}}
-                {{--                    name="content"--}}
-                {{--                    autofocus="autofocus">{{ old('content', '') }}</textarea>--}}
-            </div>
-            <div>
-                <label class="block font-medium text-sm text-gray-700"
-                       for="user_id">
+            <x-post.form.input
+                value="{{ old('content', '') }}"
+                type="text"
+                name="content"
+            >
+                Content
+            </x-post.form.input>
+
+            <x-post.form.item>
+                <x-post.form.label
+                    for="user_id"
+                >
                     Автор
-                </label>
-                <select
-                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full"
-                    id="user_id"
-                    name="user_id"
-                    type="text"
-                    required="required"
-                    autofocus="autofocus">
+                </x-post.form.label>
+
+                <x-post.form.select name="user_id">
                     @foreach($users as $user)
                         <option
-                            @selected(old('user_id') == $user->id) value="{{ $user->id }}">{{ $user->name }}</option>
+                            @selected(old('user_id') == $user->id)
+                            value="{{ $user->id }}">{{ $user->name }}
+                        </option>
                     @endforeach
-                </select>
-            </div>
-            <div class="mt-5">
-                <label class="block font-medium text-sm text-gray-700" for="category">
+                </x-post.form.select>
+
+            </x-post.form.item>
+
+            <x-post.form.item>
+                <x-post.form.label for="category_id">
                     Категория
-                </label>
-                <select
-                    id="category"
-                    name="category_id"
-                    required="required"
-                    autofocus="autofocus"
-                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1
-                    w-full">
+                </x-post.form.label>
+                <x-post.form.select name="category_id">
                     @foreach($categories as $category)
                         <option
-                            @selected(old('category_id') == $category->id) value="{{ $category->id }}">{{ $category->title }}</option>
+                            @selected(old('category_id') == $category->id)
+                            value="{{ $category->id }}">{{ $category->title }}
+                        </option>
                     @endforeach
-                </select>
-            </div>
-            <div class="mt-5">
-                <label class="block font-medium text-sm text-gray-700" for="published_at">
+                </x-post.form.select>
+            </x-post.form.item>
+
+            <x-post.form.item>
+                <label
+                    class="block font-medium text-sm text-gray-700"
+                    for="published_at"
+                >
                     Дата публикации
                 </label>
                 <input
@@ -82,26 +75,41 @@
                     type="date"
                     name="published_at"
                     required="required"
-                    autofocus="autofocus">
-            </div>
-            <div class="mt-5">
-                <input name="files[]" multiple type="file"
-                       class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm block mt-1 w-full">
-            </div>
-            <div class="mt-5">
-                <label class="block font-medium text-sm text-gray-700" for="visible">
+                    autofocus="autofocus"
+                >
+            </x-post.form.item>
+
+            <x-post.form.item>
+                <input
+                    name="files[]"
+                    multiple
+                    type="file"
+                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm block mt-1 w-full"
+                >
+            </x-post.form.item>
+            <x-post.form.item>
+                <label
+                    class="block font-medium text-sm text-gray-700"
+                    for="visible"
+                >
                     Отображать?
                 </label>
                 <input
                     hidden
-                    value="0" name="is_visible">
+                    value="0"
+                    name="is_visible"
+                >
                 <input
                     value="1"
                     class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1"
-                    id="visible" type="checkbox" name="is_visible" autofocus="autofocus">
-            </div>
+                    id="visible"
+                    type="checkbox"
+                    name="is_visible"
+                    autofocus="autofocus"
+                >
+            </x-post.form.item>
 
-            <button class="mt-10 p-3 bg-blue-600 rounded-md hover:bg-blue-400" type="submit">Сохранить</button>
-        </form>
+            <x-post.form.button>Сохранить</x-post.form.button>
+        </x-post.form>
     </div>
 @endsection

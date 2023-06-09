@@ -22,7 +22,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the post for creating a new resource.
      */
     public function create()
     {
@@ -40,7 +40,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the post for editing the specified resource.
      */
     public function edit(Category $category)
     {

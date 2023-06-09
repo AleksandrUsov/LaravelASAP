@@ -12372,7 +12372,7 @@
     });
 
     const schema$j = constant$1([
-      defaulted('prefix', 'form-field'),
+      defaulted('prefix', 'post-field'),
       field('fieldBehaviours', [
         Composing,
         Representing
@@ -12521,15 +12521,15 @@
       components: [text$2(providersBackstage.translate(label))]
     });
 
-    const formChangeEvent = generate$6('form-component-change');
-    const formCloseEvent = generate$6('form-close');
-    const formCancelEvent = generate$6('form-cancel');
-    const formActionEvent = generate$6('form-action');
-    const formSubmitEvent = generate$6('form-submit');
-    const formBlockEvent = generate$6('form-block');
-    const formUnblockEvent = generate$6('form-unblock');
-    const formTabChangeEvent = generate$6('form-tabchange');
-    const formResizeEvent = generate$6('form-resize');
+    const formChangeEvent = generate$6('post-component-change');
+    const formCloseEvent = generate$6('post-close');
+    const formCancelEvent = generate$6('post-cancel');
+    const formActionEvent = generate$6('post-action');
+    const formSubmitEvent = generate$6('post-submit');
+    const formBlockEvent = generate$6('post-block');
+    const formUnblockEvent = generate$6('post-unblock');
+    const formTabChangeEvent = generate$6('post-tabchange');
+    const formResizeEvent = generate$6('post-resize');
 
     const renderCollection = (spec, providersBackstage, initialData) => {
       const pLabel = spec.label.map(label => renderLabel$3(label, providersBackstage));
@@ -12897,7 +12897,7 @@
               memColorButton.asSpec()
             ]
           }]),
-        fieldBehaviours: derive$1([config('form-field-events', [
+        fieldBehaviours: derive$1([config('post-field-events', [
             run$1(colorInputChangeEvent, (comp, se) => {
               memColorButton.getOpt(comp).each(colorButton => {
                 set$8(colorButton.element, 'background-color', se.event.color);
@@ -13947,7 +13947,7 @@
         return deepMerge(Form.sketch(parts => ({
           dom: {
             tag: 'form',
-            classes: [getClass('rgb-form')],
+            classes: [getClass('rgb-post')],
             attributes: { 'aria-label': translate('aria.color.picker') }
           },
           components: [
@@ -13958,8 +13958,8 @@
             memPreview.asSpec()
           ],
           formBehaviours: derive$1([
-            Invalidating.config({ invalidClass: getClass('form-invalid') }),
-            config('rgb-form-events', [
+            Invalidating.config({ invalidClass: getClass('post-invalid') }),
+            config('rgb-post-events', [
               run$1(validInput, onValidInput),
               run$1(invalidInput, onInvalidInput),
               run$1(validatingInput, onInvalidInput)
@@ -14315,7 +14315,7 @@
             const picker = memPicker.get(comp);
             const optRgbForm = Composing.getCurrent(picker);
             optRgbForm.fold(() => {
-              console.log('Can not find form');
+              console.log('Can not find post');
             }, rgbForm => {
               Representing.setValue(rgbForm, { hex: valOpt.getOr('') });
               Form.getField(rgbForm, 'hex').each(hexField => {
@@ -15667,7 +15667,7 @@
         components: [pField]
       } : pField;
       const extraClasses = spec.flex ? ['tox-form__group--stretched'] : [];
-      const extraClasses2 = extraClasses.concat(spec.maximized ? ['tox-form-group--maximize'] : []);
+      const extraClasses2 = extraClasses.concat(spec.maximized ? ['tox-post-group--maximize'] : []);
       const extraBehaviours = [
         Disabling.config({
           disabled: () => spec.disabled || providersBackstage.isDisabled(),
@@ -23456,7 +23456,7 @@
         const contextForm = getOrDie(createContextForm(toolbarSpec));
         forms[key] = contextForm;
         contextForm.launch.map(launch => {
-          formNavigators['form:' + key + ''] = {
+          formNavigators['post:' + key + ''] = {
             ...toolbarSpec.launch,
             type: launch.type === 'contextformtogglebutton' ? 'togglebutton' : 'button',
             onAction: () => {
@@ -23659,7 +23659,7 @@
         buttons: allButtons,
         toolbar: ctx.items,
         allowToolbarGroups: false
-      }, extras.backstage, Optional.some(['form:']));
+      }, extras.backstage, Optional.some(['post:']));
       const buildContextFormGroups = (ctx, providers) => ContextForm.buildInitGroups(ctx, providers);
       const buildToolbar = toolbars => {
         const {buttons} = editor.ui.registry.getAll();
@@ -26689,7 +26689,7 @@
       const memForm = record(Form.sketch(parts => ({
         dom: {
           tag: 'div',
-          classes: ['tox-form'].concat(spec.classes)
+          classes: ['tox-post'].concat(spec.classes)
         },
         components: map$2(spec.items, item => interpretInForm(parts, item, dialogData, backstage))
       })));
@@ -27102,7 +27102,7 @@
             return [Form.sketch(parts => ({
                 dom: {
                   tag: 'div',
-                  classes: ['tox-form']
+                  classes: ['tox-post']
                 },
                 components: map$2(tab.items, item => interpretInForm(parts, item, dialogData, backstage)),
                 formBehaviours: derive$1([
@@ -27110,7 +27110,7 @@
                     mode: 'acyclic',
                     useTabstopAt: not(isPseudoStop)
                   }),
-                  config('TabView.form.events', [
+                  config('TabView.post.events', [
                     runOnAttached(setDataOnForm),
                     runOnDetached(updateDataWithForm)
                   ]),
@@ -29495,10 +29495,10 @@
             Reflecting.name(),
             Receiving.name()
           ],
-          [execute$5()]: ['execute-on-form'],
+          [execute$5()]: ['execute-on-post'],
           [attachedToDom()]: [
             'reflecting',
-            'execute-on-form'
+            'execute-on-post'
           ]
         },
         behaviours: derive$1([
@@ -29517,7 +29517,7 @@
             initialData: dialogInit
           }),
           Focusing.config({}),
-          config('execute-on-form', dialogEvents.concat([runOnSource(focusin(), (comp, _se) => {
+          config('execute-on-post', dialogEvents.concat([runOnSource(focusin(), (comp, _se) => {
               Keying.focusIn(comp);
             })])),
           Blocking.config({ getRoot: () => Optional.some(dialog) }),

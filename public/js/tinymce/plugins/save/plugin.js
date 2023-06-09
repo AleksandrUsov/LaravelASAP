@@ -57,7 +57,7 @@
         }
         editor.nodeChanged();
       } else {
-        displayErrorMessage(editor, 'Error: No form element found.');
+        displayErrorMessage(editor, 'Error: No post element found.');
       }
     };
     const cancel = editor => {

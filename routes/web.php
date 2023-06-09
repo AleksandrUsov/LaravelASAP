@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
+
+Route::post('/welcome/test-index', [\App\Http\Controllers\IndexController::class, 'index'])->name('welcome.test-index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -21,21 +21,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::name('api.posts.')->prefix('/posts')->group(function () {
     Route::get('/', [\App\Http\Controllers\Api\PostController::class, 'index'])->name('index');
-    Route::get('/post/{post}', [\App\Http\Controllers\Api\PostController::class, 'show'])->name('show');
+    Route::get('/{post}', [\App\Http\Controllers\Api\PostController::class, 'show'])->name('show');
 });
 
 Route::name('api.users.')->prefix('/users')->group(function () {
     Route::get('/', [\App\Http\Controllers\Api\UserController::class, 'index'])->name('index');
-    Route::get('/users/{user}', [\App\Http\Controllers\Api\UserController::class, 'show'])->name('show');
+    Route::get('/{user}', [\App\Http\Controllers\Api\UserController::class, 'show'])->name('show');
 });
 
 Route::name('api.categories.')->prefix('/categories')->group(function () {
     Route::get('/', [\App\Http\Controllers\Api\CategoryController::class, 'index'])->name('index');
-    Route::get('/category/{category}', [\App\Http\Controllers\Api\CategoryController::class, 'show'])->name('show');
+    Route::get('/{category}', [\App\Http\Controllers\Api\CategoryController::class, 'show'])->name('show');
 });
 
 Route::name('api.pages.')->prefix('/pages')->group(function () {
-    Route::get('/index', IndexPageController::class)->name('index');
+    Route::get('/', IndexPageController::class)->name('index');
 });
 
 

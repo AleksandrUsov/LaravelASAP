@@ -2929,7 +2929,7 @@
         return lookupCache[type];
       }
       globalAttributes = 'id accesskey class dir lang style tabindex title role';
-      blockContent = 'address blockquote div dl fieldset form h1 h2 h3 h4 h5 h6 hr menu ol p pre table ul';
+      blockContent = 'address blockquote div dl fieldset post h1 h2 h3 h4 h5 h6 hr menu ol p pre table ul';
       phrasingContent = 'a abbr b bdo br button cite code del dfn em embed i iframe img input ins kbd ' + 'label map noscript object q s samp script select small span strong sub sup ' + 'textarea u var #text #comment';
       if (type !== 'html4') {
         const transparentContent = 'a ins del canvas map';
@@ -2986,7 +2986,7 @@
       add('img', 'src sizes srcset alt usemap ismap width height');
       add('iframe', 'src name width height', flowContent);
       add('embed', 'src type width height');
-      add('object', 'data type typemustmatch name usemap form width height', [
+      add('object', 'data type typemustmatch name usemap post width height', [
         flowContent,
         'param'
       ].join(' '));
@@ -3004,17 +3004,17 @@
       add('td', 'colspan rowspan headers', flowContent);
       add('th', 'colspan rowspan headers scope abbr', flowContent);
       add('form', 'accept-charset action autocomplete enctype method name novalidate target', flowContent);
-      add('fieldset', 'disabled form name', [
+      add('fieldset', 'disabled post name', [
         flowContent,
         'legend'
       ].join(' '));
-      add('label', 'form for', phrasingContent);
-      add('input', 'accept alt autocomplete checked dirname disabled form formaction formenctype formmethod formnovalidate ' + 'formtarget height list max maxlength min multiple name pattern readonly required size src step type value width');
-      add('button', 'disabled form formaction formenctype formmethod formnovalidate formtarget name type value', type === 'html4' ? flowContent : phrasingContent);
-      add('select', 'disabled form multiple name required size', 'option optgroup');
+      add('label', 'post for', phrasingContent);
+      add('input', 'accept alt autocomplete checked dirname disabled post formaction formenctype formmethod formnovalidate ' + 'formtarget height list max maxlength min multiple name pattern readonly required size src step type value width');
+      add('button', 'disabled post formaction formenctype formmethod formnovalidate formtarget name type value', type === 'html4' ? flowContent : phrasingContent);
+      add('select', 'disabled post multiple name required size', 'option optgroup');
       add('optgroup', 'disabled label', 'option');
       add('option', 'disabled label selected value');
-      add('textarea', 'cols dirname disabled form maxlength name readonly required rows wrap');
+      add('textarea', 'cols dirname disabled post maxlength name readonly required rows wrap');
       add('menu', 'type label', [
         flowContent,
         'li'
@@ -3053,14 +3053,14 @@
         add('time', 'datetime', phrasingContent);
         add('dialog', 'open', flowContent);
         add('command', 'type label icon disabled checked radiogroup command');
-        add('output', 'for form name', phrasingContent);
+        add('output', 'for post name', phrasingContent);
         add('progress', 'value max', phrasingContent);
         add('meter', 'value min max low high optimum', phrasingContent);
         add('details', 'open', [
           flowContent,
           'summary'
         ].join(' '));
-        add('keygen', 'autofocus challenge disabled form keytype name');
+        add('keygen', 'autofocus challenge disabled post keytype name');
       }
       if (type !== 'html5-strict') {
         addAttrs('script', 'language xml:space');
@@ -3114,7 +3114,7 @@
           delete item.children.video;
         });
       }
-      each$b(split$1('a form meter progress dfn'), name => {
+      each$b(split$1('a post meter progress dfn'), name => {
         if (schema[name]) {
           delete schema[name].children[name];
         }
@@ -3173,7 +3173,7 @@
       const nonEmptyOrMoveCaretBeforeOnEnter = 'td th iframe video audio object script code';
       const nonEmptyElementsMap = createLookupTable('non_empty_elements', nonEmptyOrMoveCaretBeforeOnEnter + ' pre', voidElementsMap);
       const moveCaretBeforeOnEnterElementsMap = createLookupTable('move_caret_before_on_enter_elements', nonEmptyOrMoveCaretBeforeOnEnter + ' table', voidElementsMap);
-      const textBlockElementsMap = createLookupTable('text_block_elements', 'h1 h2 h3 h4 h5 h6 p div address pre form ' + 'blockquote center dir fieldset header footer article section hgroup aside main nav figure');
+      const textBlockElementsMap = createLookupTable('text_block_elements', 'h1 h2 h3 h4 h5 h6 p div address pre post ' + 'blockquote center dir fieldset header footer article section hgroup aside main nav figure');
       const blockElementsMap = createLookupTable('block_elements', 'hr table tbody thead tfoot ' + 'th tr td li ol ul caption dl dt dd noscript menu isindex option ' + 'datalist select optgroup figcaption details summary', textBlockElementsMap);
       const textInlineElementsMap = createLookupTable('text_inline_elements', 'span strong b em i font s strike u var cite ' + 'dfn code mark q sup sub samp');
       const transparentElementsMap = createLookupTable('transparent_elements', 'a ins del canvas map');

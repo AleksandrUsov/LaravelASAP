@@ -3,6 +3,7 @@
         required="required"
         autofocus="autofocus"
         name="{{ $name }}"
-        id="{{ $name }}">
+        id="{{ $name }}"
+>
     {{ $slot }}
 </select>

@@ -1,3 +1,0 @@
-<label>
-    qweqweqeqweqwe
-</label>

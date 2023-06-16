@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\Pages\IndexPageController;
+use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,18 +23,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::name('api.posts.')->prefix('/posts')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Api\PostController::class, 'index'])->name('index');
-    Route::get('/{post}', [\App\Http\Controllers\Api\PostController::class, 'show'])->name('show');
+    Route::get('/', [PostController::class, 'index'])->name('index');
+    Route::get('/{post}', [PostController::class, 'show'])->name('show');
 });
 
 Route::name('api.users.')->prefix('/users')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Api\UserController::class, 'index'])->name('index');
-    Route::get('/{user}', [\App\Http\Controllers\Api\UserController::class, 'show'])->name('show');
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/{user}', [UserController::class, 'show'])->name('show');
 });
 
 Route::name('api.categories.')->prefix('/categories')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Api\CategoryController::class, 'index'])->name('index');
-    Route::get('/{category}', [\App\Http\Controllers\Api\CategoryController::class, 'show'])->name('show');
+    Route::get('/', [CategoryController::class, 'index'])->name('index');
+    Route::get('/{category}', [CategoryController::class, 'show'])->name('show');
 });
 
 Route::name('api.pages.')->prefix('/pages')->group(function () {
